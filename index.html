@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Breakout Clone</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="endscreen">
+      <h1>YOU WIN!</h1>
+      <input
+        type="button"
+        value="Play Again"
+        onclick="init(),hideEndScreen()"
+      />
+    </div>
+    <div class="popup">
+      <div class="popup-header">
+        <h1>Welcome to BREAKOUT</h1>
+        <input type="button" value="&times;" onclick="closePopup()" />
+      </div>
+      <main>
+        <h3>How to play:</h3>
+        <p>
+          Destroy all of the bricks by bouncing the ball into them. The darker
+          bricks need to be hit more than once.
+        </p>
+        <img src="images/brick_hit.png" alt="" srcset="" />
+        <p>
+          If the ball touches the bottom side of the play space, you lose a
+          life. If you lose all of them, the game ends.
+        </p>
+        <img src="images/lose_life.png" alt="" srcset="" />
+        <p>
+          To move the paddle either use the mouse or left and right arrow keys.
+          You can control the ball's trajectory by either. 
+        </p>
+        <p>
+          To begin, exit this window and click on the play space (the big white
+          rectangle).
+        </p>
+      </main>
+    </div>
+    <div class="overlay"></div>
+    <header>
+      <!--  /> -->
+      <h1 id="lives">&nbsp;</h1>
+      <h1 id="score">&nbsp;</h1>
+      <h1 id="timer">&nbsp;</h1>
+    </header>
+    <canvas></canvas>
+    <script src="script.js"></script>
+  </body>
+</html>
