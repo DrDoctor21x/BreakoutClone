@@ -1,9 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+
 body {
   height: 100vh;
   font-family: "Roboto", sans-serif;
@@ -14,23 +16,28 @@ body {
   align-items: center;
   flex-direction: column;
   background-color: #1c0d24;
+  background-image: url("images/bg.jpg");
 }
+
 canvas {
   background-color: #f2eceb;
 }
+
 header {
   width: 50%;
-  background-color:#1C0D24;
+  background-color: #1C0D24;
   display: flex;
   justify-content: center;
   flex-direction: row;
   align-items: center;
   margin: 1rem;
 }
-header>h1{
-  
+
+header>h1 {
+
   background-color: #d099eb;
-  text-shadow: 2px 2px #661091;;
+  text-shadow: 2px 2px #661091;
+  ;
   flex: 1;
   text-align: center;
   margin: 1rem;
@@ -45,8 +52,9 @@ header>h1{
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  
+
 }
+
 .popup {
   position: fixed;
   top: 50%;
@@ -57,6 +65,7 @@ header>h1{
   min-width: 800px;
   background-color: #f2eceb;
 }
+
 .popup-header {
   background-color: #af4ae1;
   display: flex;
@@ -65,7 +74,8 @@ header>h1{
   padding: 1rem;
   border-bottom: 0.25rem #401d52 solid;
 }
-.popup-header > input[type="button"] {
+
+.popup-header>input[type="button"] {
   font-size: 3rem;
   font-weight: bold;
   color: #f2eceb;
@@ -74,23 +84,28 @@ header>h1{
   border: none;
   outline: none;
 }
-.popup > main {
+
+.popup>main {
   color: #af4ae1;
   padding: 1rem;
 }
-.popup > main > img {
+
+.popup>main>img {
   box-shadow: 5px 5px 5px #aaaaaa;
   height: 10rem;
   display: block;
 }
-.popup > main > p {
+
+.popup>main>p {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
 h3 {
   padding-bottom: 0.5rem;
   border-bottom: 0.125rem #401d52 solid;
 }
+
 .endscreen {
   position: fixed;
   display: flex;
@@ -105,7 +120,8 @@ h3 {
   padding: 1rem;
   background-color: #d41df5;
 }
-.endscreen > input[type="button"] {
+
+.endscreen>input[type="button"] {
   font-family: "Roboto", sans-serif;
   font-size: 24px;
   background-color: #af4ae1;
@@ -113,10 +129,98 @@ h3 {
   color: #f2eceb;
   padding: 0.5rem;
 }
-.endscreen > input[type="button"]:active {
+
+.endscreen>input[type="button"]:active {
   background-color: #f2eceb;
   color: #af4ae1;
 }
-.endscreen > h1{
+
+.endscreen>h1 {
   padding: 1rem;
+}
+
+#playButton {
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  background-color: #af4ae1;
+  border: none;
+  color: #f2eceb;
+  padding: 0.5rem;
+}
+
+#playButton:active {
+  background-color: #f2eceb;
+  color: #af4ae1;
+}
+
+#playerName {
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  color: #f2eceb;
+  border: none;
+  background-color: #af4ae188;
+  padding: 0.5rem;
+}
+#highScores{
+  position: fixed;
+  top: 1vh;
+  right: 1vw;
+  z-index: 10;
+  background-color: #f2eceb;
+  height: 100vh;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: fixed;
+  top: 1vh;
+  left: 1vw;
+  z-index: 10;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f2eceb;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #e4dedc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #d41df5;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #d41df5;
+}
+
+input:checked+.slider:before {
+  transform: translateX(26px);
 }
