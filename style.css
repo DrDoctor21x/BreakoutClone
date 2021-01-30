@@ -18,7 +18,11 @@ body {
   background-color: #1c0d24;
   background-image: url("images/bg.jpg");
 }
-
+@media only screen and (max-width: 2000px) {
+  body {
+    font-size: 16px;
+  }
+}
 canvas {
   background-color: #f2eceb;
 }
