@@ -88,6 +88,7 @@ function gameCounter() {
 	} else if (lifeCounter <= 0) {
 		isInitialized = false;
 		lose.play();
+		updateScoreboard();
 		window.cancelAnimationFrame(timer);
 		showEndScreen(false);
 	} else if (!isPaused) {
@@ -435,9 +436,9 @@ function toggleMusic() {
 function updateScoreboard() {
 	let tempScore;
 	let isLast = true;
-	if (playerName.trim() != "") {
-		scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100)+lifeCounter*100;
 
+	scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100) + lifeCounter * 100;
+	if (playerName.trim() != "") {
 		for (let i = 0; i < savedScores.length; i++) {
 			tempScore = savedScores[i].split("&nbsp;");
 			if (scoreCounter >= tempScore[1]) {
