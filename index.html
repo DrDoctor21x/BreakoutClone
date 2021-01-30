@@ -6,22 +6,26 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Breakout Clone</title>
 	<link rel="stylesheet" href="style.css" />
+	<link rel="shortcut icon" href="favicon.ico">
 </head>
 
-<body>
+<body onload="updateScoreboardElement()">
+	
+	<!-- Music toggle  -->
 	<label class="switch">
-		<input type="checkbox" onclick="toggleMusic()">
-		<span class="slider"></span></label>
+		<h1>Sound:</h1>
+		<input type="checkbox" checked>
+		<span class="slider"></span>
+	</label>
+	<!-- End Screen -->
 	<div class="endscreen">
 		<h1>YOU WIN!</h1>
 		<input type="button" value="Play Again" onclick="init(),hideEndScreen()" />
 	</div>
+	<!-- Start Screen -->
 	<div class="popup">
 		<div class="popup-header">
 			<h1>Welcome to BREAKOUT</h1>
-
-
-
 			<input type="button" value="&times;" onclick="closePopup(),init()" />
 		</div>
 		<main>
@@ -47,16 +51,24 @@
 			<input id="playButton" type="button" value="PLAY">
 		</main>
 	</div>
+	<!-- Transparent overlay -->
 	<div class="overlay"></div>
-	<header>
-		<h1 id="lives">&nbsp;</h1>
-		<h1 id="score">&nbsp;</h1>
-		<h1 id="timer">&nbsp;</h1>
-	</header>
-	<canvas></canvas>
-	<div id="highScores">
-		<h1>HIGH SCORES:</h1>
+	<!-- Page Container -->
+	<div class="grid-container">
+		<div class="left"></div>
+		<div class="Right">
+			<h1>HIGH SCORES</h1>
+			<div class="scoreboard">
+			</div>
+		</div>
+		<div class="Top">
+			<h1 id="lives">&nbsp;</h1>
+			<h1 id="score">&nbsp;</h1>
+			<h1 id="timer">&nbsp;</h1>
+		</div>
+		<div class="CanvasArea"><canvas onclick="canvas.requestPointerLock();"></canvas></div>
 	</div>
+	<div class="tag">Made by: Oskar K, 4.RA</div>
 	<script src="script.js"></script>
 </body>
 

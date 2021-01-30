@@ -1,6 +1,6 @@
 canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth * 0.7;
-canvas.height = window.innerHeight * 0.7;
+canvas.width = document.querySelector(".CanvasArea").clientWidth;
+canvas.height = document.querySelector(".CanvasArea").clientHeight / 1.5;
 ctx = canvas.getContext("2d");
 document.addEventListener("keyup", onKeyUp);
 document.addEventListener("keydown", onKeyDown);
@@ -9,6 +9,7 @@ document.querySelector("#playButton").onclick = function () {
 	closePopup();
 };
 document.addEventListener("pointerlockchange", lockChangeAlert, false);
+
 
 function lockChangeAlert() {
 	if (document.pointerLockElement === canvas) {
@@ -20,11 +21,13 @@ function lockChangeAlert() {
 
 var playerName;
 var lives = 10;
+var isPaused;
 var lifeCounter;
 var scoreCounter;
 var isInitialized = false;
 var startMS;
 var timer;
+var timeInterval;
 
 var hit = new Audio("sounds/hit.wav");
 var destroy = new Audio("sounds/destroy.wav");
@@ -33,29 +36,65 @@ var win = new Audio("sounds/win.wav");
 var life = new Audio("sounds/life.wav");
 var audioArr = [hit, destroy, lose, win, life];
 
+var savedScores = JSON.parse(window.localStorage.getItem('savedScores')) || [];
+
 function init() {
 	if (!isInitialized) {
-		canvas.requestPointerLock();
 
+		updateScoreboardElement();
+		canvas.requestPointerLock();
+		isPaused = false;
 		playerName = document.querySelector("#playerName").value;
 		lifeCounter = lives;
 		scoreCounter = 0000;
 		startMS = Date.now();
 		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 200);
 		paddle = new Paddle(canvas.width / 7, canvas.height / 30, canvas.height / 40);
-		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 60);
-		container.populateContainer(1);
-
-
+		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
+		container.populateContainer(0);
 		isInitialized = true;
-		document.querySelector("header > #lives").innerHTML =
+		document.querySelector("#lives").innerHTML =
 			"LIVES : " + lifeCounter;
-		document.querySelector("header > #score").innerHTML =
+		document.querySelector("#score").innerHTML =
 			"SCORE : " + scoreCounter;
 		window.requestAnimationFrame(gameCounter);
 	}
 }
 
+
+function updateTimer() {
+	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + 'e2') + 'e-2');
+}
+
+function gameCounter() {
+	toggleMusic();
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	paddle.checkForCollisions();
+	container.checkCollisions();
+
+	paddle.drawPaddle();
+	container.drawBricks();
+
+	ball.drawBall();
+
+
+	if (container.checkForWin()) {
+		isInitialized = false;
+		win.play();
+		window.cancelAnimationFrame(timer);
+		updateScoreboard();
+		showEndScreen(true);
+	} else if (lifeCounter <= 0) {
+		isInitialized = false;
+		lose.play();
+		window.cancelAnimationFrame(timer);
+		showEndScreen(false);
+	} else if (!isPaused) {
+		updateTimer();
+		timer = window.requestAnimationFrame(gameCounter);
+	}
+}
 class BrickContainer {
 	constructor(columns, rows, height, gap) {
 		this.columns = columns;
@@ -75,8 +114,10 @@ class BrickContainer {
 		for (let i = 0; i < this.rows; i++) {
 			let temp = [];
 			for (let j = 0; j < this.columns; j++) {
-				//temp.push(new Brick(Math.floor(Math.random() * maxLevel + 1)));
-				temp.push(new Brick(this.rows - i));
+				if (maxLevel > 0)
+					temp.push(new Brick(Math.floor(Math.random() * maxLevel + 1)));
+				else
+					temp.push(new Brick(this.rows - i));
 			}
 			this.brickArray.push(temp);
 		}
@@ -196,15 +237,14 @@ class Brick {
 
 					this.level -= 1;
 					scoreCounter += 100;
-					document.querySelector("header > #score").innerHTML =
+					document.querySelector("#score").innerHTML =
 						"SCORE : " + scoreCounter;
 					hit.play();
-					console.log("hit");
 				}
 			}
 			if (this.level <= 0) {
 				scoreCounter += 200;
-				document.querySelector("header > #score").innerHTML =
+				document.querySelector("#score").innerHTML =
 					"SCORE : " + scoreCounter;
 				destroy.play();
 				this.enabled = false;
@@ -241,13 +281,13 @@ class Ball {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.dia, 0, Math.PI * 2, true);
 		ctx.closePath();
-		ctx.fillStyle = "#BFE04A";
+		ctx.fillStyle = "#2FA125";
 		ctx.fill();
-		ctx.beginPath();
-		ctx.lineWidth = 5;
-		ctx.strokeStyle = "#94AD39";
-		ctx.arc(this.x, this.y, this.dia, 0, Math.PI * 2, true);
-		ctx.stroke();
+		/* 		ctx.beginPath();
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = "#BFE04A";
+				ctx.arc(this.x, this.y, this.dia, 0, Math.PI * 2, true);
+				ctx.stroke(); */
 		this.x += this.dx;
 		this.y += this.dy;
 		let rand;
@@ -300,7 +340,7 @@ class Paddle {
 					ball.dx = rand;
 				} else {
 					paddle.xUpdate *= 0.1;
-					let xUpdateThreshold = 5;
+					let xUpdateThreshold = 3;
 					if (
 						!(
 							paddle.xUpdate >= -xUpdateThreshold &&
@@ -326,12 +366,14 @@ function onKeyDown(evt) {
 		paddle.leftDown = true;
 		paddle.xUpdate = paddle.step * -1;
 	}
+
 }
 
 function onKeyUp(evt) {
 	if (evt.keyCode == 39) paddle.rightDown = false;
 
 	if (evt.keyCode == 37) paddle.leftDown = false;
+
 }
 
 function onMouseMove(evt) {
@@ -350,51 +392,21 @@ function checkForFails() {
 		lifeCounter--;
 		scoreCounter -= 100;
 		life.play();
-		document.querySelector("header > #lives").innerHTML =
+		document.querySelector("#lives").innerHTML =
 			"LIVES : " + lifeCounter;
-		document.querySelector("header > #score").innerHTML =
+		document.querySelector("#score").innerHTML =
 			"SCORE : " + scoreCounter;
 	}
 }
 
-function updateTimer() {
-	document.querySelector("header > #timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + 'e2') + 'e-2');
-}
-
-function gameCounter() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-	paddle.checkForCollisions();
-	container.checkCollisions();
-
-	paddle.drawPaddle();
-	container.drawBricks();
-
-	ball.drawBall();
-
-
-	if (container.checkForWin()) {
-		isInitialized = false;
-		win.play();
-		window.cancelAnimationFrame(timer);
-		showEndScreen(true);
-	} else if (lifeCounter <= 0) {
-		isInitialized = false;
-		lose.play();
-		window.cancelAnimationFrame(timer);
-		showEndScreen(false);
-	} else {
-		updateTimer();
-		timer = window.requestAnimationFrame(gameCounter);
-	}
-}
 
 function showEndScreen(hasWon) {
 	document.exitPointerLock();
+	updateScoreboardElement();
 	if (hasWon) {
-		document.querySelector(".endscreen > h1").innerHTML = "YOU WIN!";
+		document.querySelector(".endscreen > h1").innerHTML = "YOU WIN!</br> FINAL SCORE: " + scoreCounter;
 	} else {
-		document.querySelector(".endscreen > h1").innerHTML = "YOU LOSE!";
+		document.querySelector(".endscreen > h1").innerHTML = "YOU LOSE!</br> FINAL SCORE: " + scoreCounter;
 	}
 	let endscreen = document.querySelector(".endscreen");
 	endscreen.style.transform = "translate(-50%, -50%) scale(1)";
@@ -417,6 +429,41 @@ function closePopup() {
 }
 function toggleMusic() {
 	audioArr.forEach(element => {
-		element.muted = !element.muted;
+		element.muted = !document.querySelector(".switch input").checked;
 	});
+}
+function updateScoreboard() {
+	let tempScore;
+	let isLast = true;
+	if (playerName.trim() != "") {
+		scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100)+lifeCounter*100;
+
+		for (let i = 0; i < savedScores.length; i++) {
+			tempScore = savedScores[i].split("&nbsp;");
+			if (scoreCounter >= tempScore[1]) {
+				savedScores.splice(i, 0, playerName + "&nbsp;" + scoreCounter);
+				isLast = false;
+				break;
+			}
+		}
+		if (savedScores.length == 0 || isLast) {
+			savedScores.push(playerName + "&nbsp;" + scoreCounter);
+		}
+		localStorage.setItem('savedScores', JSON.stringify(savedScores));
+	}
+
+}
+function updateScoreboardElement() {
+	let el = document.querySelector(".scoreboard");
+	el.innerHTML = "";
+	for (let i = 0; i < savedScores.length; i++) {
+		if (i < 40) {
+			el.innerHTML = el.innerHTML + savedScores[i] + "<br />";
+		} else if (i >= 40) {
+			el.innerHTML = el.innerHTML + ". . ." + "<br />";
+			break;
+		}
+
+
+	}
 }

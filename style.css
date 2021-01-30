@@ -12,7 +12,7 @@ body {
   font-size: 24px;
   color: #f2eceb;
   display: flex;
-  justify-content: start;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
   background-color: #1c0d24;
@@ -22,25 +22,17 @@ body {
 canvas {
   background-color: #f2eceb;
 }
-
-header {
-  width: 50%;
-  background-color: #1C0D24;
+.Top {
   display: flex;
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  margin: 1rem;
 }
 
-header>h1 {
-
-  background-color: #d099eb;
-  text-shadow: 2px 2px #661091;
-  ;
+.Top>h1 {
+  background-color: #af4ae1;
   flex: 1;
   text-align: center;
-  margin: 1rem;
   padding: 1rem;
 }
 
@@ -62,7 +54,6 @@ header>h1 {
   transform: translate(-50%, -50%) scale(1);
   transition: 200ms ease-in-out;
   z-index: 10;
-  min-width: 800px;
   background-color: #f2eceb;
 }
 
@@ -112,6 +103,7 @@ h3 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
@@ -161,7 +153,8 @@ h3 {
   background-color: #af4ae188;
   padding: 0.5rem;
 }
-#highScores{
+
+#highScores {
   position: fixed;
   top: 1vh;
   right: 1vw;
@@ -170,11 +163,69 @@ h3 {
   height: 100vh;
 }
 
+.grid-container {
+
+  height: 99vh;
+  width: 99vw;
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr 1.25fr 0.75fr;
+  grid-template-rows: 0.3fr 1.7fr 1fr;
+  gap: 3rem 3rem;
+  grid-template-areas:
+    "left Top Top Right"
+    "left CanvasArea CanvasArea Right"
+    "left CanvasArea CanvasArea Right";
+}
+
+.left {
+  grid-area: left;
+}
+
+.Right {
+  padding: 1rem;
+  grid-area: Right;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+}
+
+.right>h1 {
+
+  background-color: #af4ae1;
+}
+
+.scoreboard {
+  color: #f2eceb;
+  text-align: center;
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.Top {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  grid-area: Top;
+
+}
+
+.CanvasArea {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  grid-area: CanvasArea;
+}
+
+
 /* The switch - the box around the slider */
 .switch {
   position: fixed;
-  top: 1vh;
-  left: 1vw;
+  top: 34px;
+  left: 130px;
   z-index: 10;
   display: inline-block;
   width: 60px;
@@ -186,6 +237,12 @@ h3 {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+.switch h1 {
+  position: absolute;
+  left: -120px;
+  font-size: 2rem;
 }
 
 /* The slider */
