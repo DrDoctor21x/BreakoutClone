@@ -49,8 +49,9 @@ function init() {
 		scoreCounter = 0000;
 		startMS = Date.now();
 		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 200);
-		paddle = new Paddle(canvas.width / 7, canvas.height / 30, canvas.height / 40);
+		paddle = new Paddle(canvas.width / 7, (container.cellHeight / 2) * 0.5, canvas.height / 40);
 		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
+		
 		container.populateContainer(0);
 		isInitialized = true;
 		document.querySelector("#lives").innerHTML =
