@@ -48,7 +48,7 @@ function init() {
 		lifeCounter = lives;
 		scoreCounter = 0000;
 		startMS = Date.now();
-		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 200);
+		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 100);
 		paddle = new Paddle(canvas.width / 7, (container.cellHeight / 2) * 0.5, canvas.height / 40);
 		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
 		
@@ -168,6 +168,7 @@ class BrickContainer {
 		this.currentY = this.gap;
 	}
 	checkCollisions() {
+		
 		for (let i = 0; i < this.brickArray.length; i++) {
 			for (let j = 0; j < this.brickArray[0].length; j++) {
 				this.brickArray[i][j].checkCollision();
@@ -202,10 +203,6 @@ class Brick {
 					ball.x + ball.dia > this.x &&
 					ball.x - ball.dia < this.x + container.cellWidth
 				) {
-					ball.hasCollided = true;
-					setTimeout(function () {
-						ball.hasCollided = false;
-					}, 0);
 					let centerX = this.x + container.cellWidth / 2;
 					let centerY = this.y + container.cellHeight / 2;
 					let offsetX = Math.abs(ball.x - centerX);
@@ -400,7 +397,6 @@ function checkForFails() {
 			"SCORE : " + scoreCounter;
 	}
 }
-
 
 function showEndScreen(hasWon) {
 	document.exitPointerLock();
