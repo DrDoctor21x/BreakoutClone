@@ -40,7 +40,6 @@ var savedScores = JSON.parse(window.localStorage.getItem('savedScores')) || [];
 
 function init() {
 	if (!isInitialized) {
-
 		updateScoreboardElement();
 		canvas.requestPointerLock();
 		isPaused = false;
@@ -49,7 +48,7 @@ function init() {
 		scoreCounter = 0000;
 		startMS = Date.now();
 		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 100);
-		paddle = new Paddle(canvas.width / 7, (container.cellHeight / 2) * 0.5, canvas.height / 40);
+		paddle = new Paddle(canvas.width / 5, (container.cellHeight / 2) * 0.5, canvas.height / 40);
 		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
 
 		container.populateContainer(0);
