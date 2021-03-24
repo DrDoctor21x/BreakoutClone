@@ -4,12 +4,12 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-size: 24px;
 }
 
 body {
   height: 98vh;
   font-family: "Roboto", sans-serif;
-  font-size: 24px;
   color: #f2eceb;
   display: flex;
   justify-content: space-around;
@@ -18,11 +18,7 @@ body {
   background-color: #1c0d24;
   background-image: url("images/bg.jpg");
 }
-@media only screen and (max-width: 2000px) {
-  body {
-    font-size: 16px;
-  }
-}
+
 canvas {
   background-color: #f2eceb;
 }
@@ -31,15 +27,31 @@ canvas {
   justify-content: center;
   flex-direction: row;
   align-items: center;
+  grid-area: Top;
 }
 
-.Top>h1 {
+.Top > h1 {
   background-color: #af4ae1;
   flex: 1;
   text-align: center;
   padding: 1rem;
 }
 
+.Right {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  grid-area: Right;
+}
+
+.Right > h1 {
+  background-color: #af4ae1;
+  flex: 1;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  margin-bottom: 3rem;
+}
 .overlay {
   position: fixed;
   z-index: 1;
@@ -48,7 +60,6 @@ canvas {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-
 }
 
 .popup {
@@ -66,12 +77,11 @@ canvas {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 0.25rem #401d52 solid;
 }
 
-.popup-header>input[type="button"] {
-  font-size: 3rem;
+.popup-header > input[type="button"] {
   font-weight: bold;
   color: #f2eceb;
   cursor: pointer;
@@ -80,20 +90,16 @@ canvas {
   outline: none;
 }
 
-.popup>main {
+
+.popup > main {
   color: #af4ae1;
-  padding: 1rem;
+  padding: 0.5rem;
+  text-align: center;
 }
 
-.popup>main>img {
-  box-shadow: 5px 5px 5px #aaaaaa;
-  height: 10rem;
-  display: block;
-}
-
-.popup>main>p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+.popup > main > p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 h3 {
@@ -113,11 +119,11 @@ h3 {
   transform: translate(-50%, -50%) scale(0);
   transition: 200ms ease-in-out;
   z-index: 11;
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #d41df5;
 }
 
-.endscreen>input[type="button"] {
+.endscreen > input[type="button"] {
   font-family: "Roboto", sans-serif;
   font-size: 24px;
   background-color: #af4ae1;
@@ -126,13 +132,13 @@ h3 {
   padding: 0.5rem;
 }
 
-.endscreen>input[type="button"]:active {
+.endscreen > input[type="button"]:active {
   background-color: #f2eceb;
   color: #af4ae1;
 }
 
-.endscreen>h1 {
-  padding: 1rem;
+.endscreen > h1 {
+  padding: 0.5rem;
 }
 
 #playButton {
@@ -166,10 +172,46 @@ h3 {
   background-color: #f2eceb;
   height: 100vh;
 }
+.popupGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "topLeft topRight"
+    "bottomLeft bottomRight";
+}
+.popupGrid > div {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popupGrid > div > img {
+  height: 6rem;
+  box-shadow:4px 4px 4px #1c0d24;
+}
+
+.topLeft {
+  grid-area: topLeft;
+}
+
+.topRight {
+  grid-area: topRight;
+}
+
+.bottomLeft {
+  grid-area: bottomLeft;
+}
+
+.bottomRight {
+  grid-area: bottomRight;
+}
 
 .grid-container {
-
-  height: 99vh;
+  margin-top: 4vh;
+  height: 94vh;
   width: 99vw;
   display: grid;
   grid-template-columns: 0.75fr 1.25fr 1.25fr 0.75fr;
@@ -185,36 +227,12 @@ h3 {
   grid-area: left;
 }
 
-.Right {
-  padding: 1rem;
-  grid-area: Right;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-
-}
-
-.right>h1 {
-
-  background-color: #af4ae1;
-}
-
 .scoreboard {
   color: #f2eceb;
   text-align: center;
-  padding: 1rem;
+  padding: 0.5rem;
   height: 100%;
   width: 100%;
-}
-
-.Top {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  grid-area: Top;
-
 }
 
 .CanvasArea {
@@ -224,16 +242,14 @@ h3 {
   grid-area: CanvasArea;
 }
 
-
 /* The switch - the box around the slider */
 .switch {
-  position: fixed;
-  top: 34px;
-  left: 130px;
+  position: relative;
   z-index: 10;
   display: inline-block;
-  width: 60px;
   height: 34px;
+  width: 60px;
+  margin-bottom: 0.5rem;
 }
 
 /* Hide default HTML checkbox */
@@ -241,12 +257,6 @@ h3 {
   opacity: 0;
   width: 0;
   height: 0;
-}
-
-.switch h1 {
-  position: absolute;
-  left: -120px;
-  font-size: 2rem;
 }
 
 /* The slider */
@@ -258,8 +268,8 @@ h3 {
   right: 0;
   bottom: 0;
   background-color: #f2eceb;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -269,19 +279,30 @@ h3 {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: #e4dedc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked+.slider {
   background-color: #d41df5;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:focus+.slider {
+input:checked + .slider {
+  background-color: #de87ee;
+}
+
+input:focus + .slider {
   box-shadow: 0 0 1px #d41df5;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   transform: translateX(26px);
+}
+
+@media only screen and (max-width: 1920px) {
+  * {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 1280px) {
+  * {
+    font-size: 16px;
+  }
 }

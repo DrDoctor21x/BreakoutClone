@@ -47,7 +47,7 @@ function init() {
 		lifeCounter = lives;
 		scoreCounter = 0000;
 		startMS = Date.now();
-		container = new BrickContainer(4, 4, canvas.height / 3, canvas.height / 100);
+		container = new BrickContainer(5, 3, canvas.height / 3, canvas.height / 100);
 		paddle = new Paddle(canvas.width / 5, (container.cellHeight / 2) * 0.5, canvas.height / 40);
 		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
 
