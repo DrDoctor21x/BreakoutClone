@@ -70,6 +70,8 @@ canvas {
   transition: 200ms ease-in-out;
   z-index: 10;
   background-color: #f2eceb;
+  height: 50vh;
+  width: 50vw;
 }
 
 .popup-header {
