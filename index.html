@@ -6,6 +6,7 @@
     <title>Breakout Clone</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.ico" />
+    
   </head>
 
   <body onload="updateScoreboardElement()">
@@ -27,7 +28,7 @@
         <input type="button" value="&times;" onclick="closePopup(),init()" />
       </div>
       <main>
-        <h3>How to play:</h3>
+<!--         <h3>How to play:</h3>
         <div class="popupGrid">
           <div class="topLeft">
             <h1>
@@ -47,7 +48,7 @@
           <div class="bottomRight">
             <img src="images/lose_life.png" alt="" srcset="" />
           </div>
-        </div>
+        </div> -->
 
         <input id="playerName" type="text" placeholder="Player123" />
         <input id="playButton" type="button" value="PLAY" />
@@ -56,9 +57,8 @@
     <!-- Transparent overlay -->
     <div class="overlay"></div>
 
-    
     <!-- Page Container -->
-    <div class="grid-container">
+    <!--  <div class="grid-container">
       <div class="left">
         <label class="switch">
           <input type="checkbox" checked />
@@ -78,8 +78,34 @@
       <div class="CanvasArea">
         <canvas onclick="canvas.requestPointerLock();"></canvas>
       </div>
+    </div> -->
+
+    <div class="canvasArea">
+      <div class="gameInfo">
+        <h1 id="lives">&nbsp;</h1>
+        <h1 id="score">&nbsp;</h1>
+        <h1 id="timer">&nbsp;</h1>
+      </div>
+      <canvas
+        width="800"
+        height="450"
+        onclick="canvas.requestPointerLock();"
+      ></canvas>
     </div>
-    <div class="tag">Made by: Oskar K, 4.RA</div>
+    <div class="leftArea">
+      <div class="gameInfo"><h1>HIGH SCORES</h1></div>
+      <label class="switch">
+        <input type="checkbox" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="rightArea">
+      <div class="gameInfo"><h1>HIGH SCORES</h1></div>
+      <div class="scoreboard"></div>
+    </div>
+
+    <!--     <div class="tag">Made by: Oskar K, 4.RA </div>    -->
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   </body>
 </html>
