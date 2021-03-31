@@ -1,15 +1,29 @@
 canvas = document.querySelector("canvas");
+<<<<<<< Updated upstream
 canvas.width = document.querySelector(".CanvasArea").clientWidth;
 canvas.height = document.querySelector(".CanvasArea").clientHeight / 1.5;
+=======
+window.onload = reportWindowSize;
+window.onresize = reportWindowSize;
+
+>>>>>>> Stashed changes
 ctx = canvas.getContext("2d");
 document.addEventListener("keyup", onKeyUp);
 document.addEventListener("keydown", onKeyDown);
+
 document.querySelector("#playButton").onclick = function () {
-	init();
 	closePopup();
 };
+document.querySelector("canvas").onclick = function () {
+	canvas.requestPointerLock();
+};
+
 document.addEventListener("pointerlockchange", lockChangeAlert, false);
 
+function reportWindowSize() {
+	canvas.width = document.querySelector(".canvasArea").clientWidth;
+	canvas.height = document.querySelector(".canvasArea").clientHeight * 0.75;
+}
 
 function lockChangeAlert() {
 	if (document.pointerLockElement === canvas) {
@@ -20,7 +34,7 @@ function lockChangeAlert() {
 }
 
 var playerName;
-var lives = 10;
+var lives = 3;
 var isPaused;
 var lifeCounter;
 var scoreCounter;
@@ -36,7 +50,7 @@ var win = new Audio("sounds/win.wav");
 var life = new Audio("sounds/life.wav");
 var audioArr = [hit, destroy, lose, win, life];
 
-var savedScores = JSON.parse(window.localStorage.getItem('savedScores')) || [];
+var savedScores = JSON.parse(window.localStorage.getItem("savedScores")) || [];
 
 function init() {
 	if (!isInitialized) {
@@ -45,39 +59,42 @@ function init() {
 		isPaused = false;
 		playerName = document.querySelector("#playerName").value;
 		lifeCounter = lives;
-		scoreCounter = 0000;
+		scoreCounter = 0;
 		startMS = Date.now();
+<<<<<<< Updated upstream
 		container = new BrickContainer(5, 3, canvas.height / 3, canvas.height / 100);
 		paddle = new Paddle(canvas.width / 5, (container.cellHeight / 2) * 0.5, canvas.height / 40);
 		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
 
 		container.populateContainer(0);
+=======
+		container = new BrickContainer(6, 6, canvas.height / 3, canvas.height / 40);
+		paddle = new Paddle(canvas.width / 5, canvas.height / 40, canvas.height / 40);
+		ball = new Ball(container.cellHeight, canvas.height / 100);
+		container.populateContainer(3);
+>>>>>>> Stashed changes
 		isInitialized = true;
-		document.querySelector("#lives").innerHTML =
-			"LIVES : " + lifeCounter;
-		document.querySelector("#score").innerHTML =
-			"SCORE : " + scoreCounter;
+		document.querySelector(".startOverlay").style.display = "none";
+		document.querySelector("#lives").innerHTML = "LIVES : " + lifeCounter;
+		document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 		window.requestAnimationFrame(gameCounter);
 	}
 }
 
-
 function updateTimer() {
-	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + 'e2') + 'e-2');
+	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + "e2") + "e-2");
 }
 
 function gameCounter() {
+	scoreCounter -= 1;
+	document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 	toggleMusic();
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 	paddle.checkForCollisions();
 	container.checkCollisions();
-
 	paddle.drawPaddle();
 	container.drawBricks();
-
 	ball.drawBall();
-
 
 	if (container.checkForWin()) {
 		isInitialized = false;
@@ -105,8 +122,7 @@ class BrickContainer {
 		this.gap = gap;
 		this.brickArray = [];
 		this.cellHeight = (this.height - (this.rows + 1) * this.gap) / this.rows;
-		this.cellWidth =
-			(this.width - (this.columns + 1) * this.gap) / this.columns;
+		this.cellWidth = (this.width - (this.columns + 1) * this.gap) / this.columns;
 
 		this.currentX = this.gap;
 		this.currentY = this.gap;
@@ -115,10 +131,15 @@ class BrickContainer {
 		for (let i = 0; i < this.rows; i++) {
 			let temp = [];
 			for (let j = 0; j < this.columns; j++) {
-				if (maxLevel > 0)
-					temp.push(new Brick(Math.floor(Math.random() * maxLevel + 1)));
-				else
+				if (maxLevel > 0) {
+					if (Math.random() < 0.5) {
+						temp.push(new Brick(Math.floor(Math.random() * maxLevel + 1)));
+					} else {
+						temp.push(new Brick(1));
+					}
+				} else {
 					temp.push(new Brick(this.rows - i));
+				}
 			}
 			this.brickArray.push(temp);
 		}
@@ -131,6 +152,7 @@ class BrickContainer {
 				if (container.brickArray[i][j].enabled) {
 					switch (container.brickArray[i][j].level) {
 						case 1:
+<<<<<<< Updated upstream
 							ctx.fillStyle = "#AF4AE1";
 							break;
 						case 2:
@@ -144,18 +166,22 @@ class BrickContainer {
 							break;
 						case 5:
 							ctx.fillStyle = "#2C1338";
+=======
+							ctx.fillStyle = "#BF4736";
+							break;
+						case 2:
+							ctx.fillStyle = "#863226";
+							break;
+						case 3:
+							ctx.fillStyle = "#391510";
+>>>>>>> Stashed changes
 							break;
 						default:
 							ctx.fillStyle = "#FFFFFF";
 							break;
 					}
 					//ctx.fillStyle = "#" + Math.random().toString(16).substr(-6);
-					ctx.fillRect(
-						this.currentX,
-						this.currentY,
-						this.cellWidth,
-						this.cellHeight
-					);
+					ctx.fillRect(this.currentX, this.currentY, this.cellWidth, this.cellHeight);
 				}
 
 				this.currentX += this.cellWidth + this.gap;
@@ -167,7 +193,6 @@ class BrickContainer {
 		this.currentY = this.gap;
 	}
 	checkCollisions() {
-
 		for (let i = 0; i < this.brickArray.length; i++) {
 			for (let j = 0; j < this.brickArray[0].length; j++) {
 				this.brickArray[i][j].checkCollision();
@@ -193,6 +218,7 @@ class Brick {
 		this.enabled = true;
 	}
 	checkCollision() {
+<<<<<<< Updated upstream
 		if (this.enabled && !(ball.hasCollided)) {
 			if (
 				ball.y - ball.dia < this.y + container.cellHeight &&
@@ -204,6 +230,13 @@ class Brick {
 				) {
 					ball.hasCollided=true;
 					setTimeout(ball.hasCollided=false, 150)
+=======
+		if (this.enabled && !ball.hasCollided) {
+			if (ball.y - ball.dia < this.y + container.cellHeight && ball.y + ball.dia > this.y) {
+				if (ball.x + ball.dia > this.x && ball.x - ball.dia < this.x + container.cellWidth) {
+					ball.hasCollided = true;
+					setTimeout((ball.hasCollided = false), 150);
+>>>>>>> Stashed changes
 					let centerX = this.x + container.cellWidth / 2;
 					let centerY = this.y + container.cellHeight / 2;
 					let offsetX = Math.abs(ball.x - centerX);
@@ -218,10 +251,7 @@ class Brick {
 							ball.y = this.y + ball.dia + container.cellHeight;
 						}
 						ball.y += ball.dy;
-					} else if (
-						offsetY / container.cellHeight <
-						offsetX / container.cellWidth
-					) {
+					} else if (offsetY / container.cellHeight < offsetX / container.cellWidth) {
 						ball.dx = ball.dx < 0 ? rand : rand * -1;
 
 						if (ball.x - centerX < 0) {
@@ -236,34 +266,18 @@ class Brick {
 					}
 
 					this.level -= 1;
-					scoreCounter += 100;
-					document.querySelector("#score").innerHTML =
-						"SCORE : " + scoreCounter;
+					scoreCounter += 200;
+					document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 					hit.play();
 				}
 			}
 			if (this.level <= 0) {
-				scoreCounter += 200;
-				document.querySelector("#score").innerHTML =
-					"SCORE : " + scoreCounter;
+				scoreCounter += 400;
+				document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 				destroy.play();
 				this.enabled = false;
 			}
 		}
-	}
-	testHitbox() {
-		ctx.beginPath();
-		ctx.lineWidth = "1";
-		//ctx.strokeStyle = "#" + Math.random().toString(16).substr(-6);
-		ctx.strokeStyle = "lime";
-		/*     ctx.rect(
-		  this.x - ball.dia,
-		  this.y - ball.dia,
-		  container.cellWidth + ball.dia * 2,
-		  container.cellHeight + ball.dia * 2
-		); */
-		ctx.rect(this.x, this.y, container.cellWidth, container.cellHeight);
-		ctx.stroke();
 	}
 }
 
@@ -328,12 +342,9 @@ class Paddle {
 	checkForCollisions() {
 		let rand;
 		if (ball.y + ball.dia > this.y) {
-			if (
-				ball.x + ball.dia > this.x &&
-				ball.x - ball.dia < this.x + this.width
-			) {
+			if (ball.x + ball.dia > this.x && ball.x - ball.dia < this.x + this.width) {
 				rand = Math.random() * 4 + ball.step;
-				ball.y = canvas.height - this.height - ball.dia;
+
 				if (paddle.leftDown) {
 					ball.dx = rand * -1;
 				} else if (paddle.rightDown) {
@@ -341,17 +352,11 @@ class Paddle {
 				} else {
 					paddle.xUpdate *= 0.1;
 					let xUpdateThreshold = 3;
-					if (
-						!(
-							paddle.xUpdate >= -xUpdateThreshold &&
-							paddle.xUpdate <= xUpdateThreshold
-						)
-					) {
-						ball.dx = paddle.xUpdate;
-					}
+					if (!(paddle.xUpdate >= -xUpdateThreshold && paddle.xUpdate <= xUpdateThreshold)) ball.dx = paddle.xUpdate;
 				}
-				rand = Math.random() * 4 + ball.step;
+
 				ball.dy = ball.dy * -1;
+				ball.y = canvas.height - this.height - ball.dia;
 			}
 		}
 	}
@@ -366,14 +371,16 @@ function onKeyDown(evt) {
 		paddle.leftDown = true;
 		paddle.xUpdate = paddle.step * -1;
 	}
-
+	if (evt.keyCode == 32) {
+		init();
+		hideEndScreen();
+	}
 }
 
 function onKeyUp(evt) {
 	if (evt.keyCode == 39) paddle.rightDown = false;
 
 	if (evt.keyCode == 37) paddle.leftDown = false;
-
 }
 
 function onMouseMove(evt) {
@@ -390,22 +397,22 @@ function onMouseMove(evt) {
 function checkForFails() {
 	if (ball.y + ball.dia >= canvas.height) {
 		lifeCounter--;
-		scoreCounter -= 100;
+		scoreCounter -= 200;
 		life.play();
-		document.querySelector("#lives").innerHTML =
-			"LIVES : " + lifeCounter;
-		document.querySelector("#score").innerHTML =
-			"SCORE : " + scoreCounter;
+		document.querySelector("#lives").innerHTML = "LIVES : " + lifeCounter;
+		document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 	}
 }
 
 function showEndScreen(hasWon) {
 	document.exitPointerLock();
+	document.querySelector(".startOverlay").style.display = "flex";
+
 	updateScoreboardElement();
 	if (hasWon) {
-		document.querySelector(".endscreen > h1").innerHTML = "YOU WIN!</br> FINAL SCORE: " + scoreCounter;
+		document.querySelector("#endMessage").innerHTML = "YOU WIN!</br> FINAL SCORE: " + scoreCounter;
 	} else {
-		document.querySelector(".endscreen > h1").innerHTML = "YOU LOSE!</br> FINAL SCORE: " + scoreCounter;
+		document.querySelector("#endMessage").innerHTML = "YOU LOSE!</br> FINAL SCORE: " + scoreCounter;
 	}
 	let endscreen = document.querySelector(".endscreen");
 	endscreen.style.transform = "translate(-50%, -50%) scale(1)";
@@ -427,7 +434,7 @@ function closePopup() {
 	overlay.style.display = "none";
 }
 function toggleMusic() {
-	audioArr.forEach(element => {
+	audioArr.forEach((element) => {
 		element.muted = !document.querySelector(".switch input").checked;
 	});
 }
@@ -435,7 +442,7 @@ function updateScoreboard() {
 	let tempScore;
 	let isLast = true;
 
-	scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100) + lifeCounter * 100;
+	/* scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100) + lifeCounter * 100; */
 	if (playerName.trim() != "") {
 		for (let i = 0; i < savedScores.length; i++) {
 			tempScore = savedScores[i].split("&nbsp;");
@@ -448,9 +455,8 @@ function updateScoreboard() {
 		if (savedScores.length == 0 || isLast) {
 			savedScores.push(playerName + "&nbsp;" + scoreCounter);
 		}
-		localStorage.setItem('savedScores', JSON.stringify(savedScores));
+		localStorage.setItem("savedScores", JSON.stringify(savedScores));
 	}
-
 }
 function updateScoreboardElement() {
 	let el = document.querySelector(".scoreboard");
@@ -462,7 +468,9 @@ function updateScoreboardElement() {
 			el.innerHTML = el.innerHTML + ". . ." + "<br />";
 			break;
 		}
-
-
 	}
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

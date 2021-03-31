@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< Updated upstream
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,19 +8,49 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.ico" />
   </head>
+=======
+>>>>>>> Stashed changes
 
-  <body onload="updateScoreboardElement()">
-    <!-- Music toggle  -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breakout Clone</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="bg.css" />
+  <link rel="shortcut icon" href="favicon.ico" />
+</head>
 
-    <!-- End Screen -->
-    <div class="endscreen">
-      <h1>YOU WIN!</h1>
-      <input
-        type="button"
-        value="Play Again"
-        onclick="init(),hideEndScreen()"
-      />
+<body class="area" onload="setUp()">
+  <ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+
+
+  <!-- End Screen -->
+  <div class="endscreen">
+    <div class="popup-header">
+      <h1 id="endMessage">YOU WIN!</h1>
     </div>
+<<<<<<< Updated upstream
     <!-- Start Screen -->
     <div class="popup">
       <div class="popup-header">
@@ -48,14 +79,20 @@
             <img src="images/lose_life.png" alt="" srcset="" />
           </div>
         </div>
+=======
+>>>>>>> Stashed changes
 
-        <input id="playerName" type="text" placeholder="Player123" />
-        <input id="playButton" type="button" value="PLAY" />
-      </main>
+    <input type="button" value="Play Again" onclick="hideEndScreen()" />
+  </div>
+  <!-- Start Screen -->
+  <div class="popup">
+    <div class="popup-header">
+      <h1>Welcome to BREAKOUT</h1>
+      <input type="button" value="&times;" onclick="closePopup()" />
     </div>
-    <!-- Transparent overlay -->
-    <div class="overlay"></div>
+    <main>
 
+<<<<<<< Updated upstream
     
     <!-- Page Container -->
     <div class="grid-container">
@@ -83,3 +120,45 @@
     <script src="script.js"></script>
   </body>
 </html>
+=======
+      <input id="playerName" type="text" placeholder="Player123" />
+      <input id="playButton" type="button" value="PLAY" />
+    </main>
+  </div>
+  <!-- Transparent overlay -->
+  <div class="overlay"></div>
+  <div class="startOverlay">Press SPACE to start</div>
+
+  <!-- Page -->
+  <div class="leftArea">
+    <div class="gameInfo">
+      <h1 style="width:100%">SOUND :</h1>
+    </div>
+    <!-- Rounded switch -->
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+  </div>
+  <div class="canvasArea">
+    <div class="gameInfo">
+      <h1 id="lives">&nbsp;</h1>
+      <h1 id="score">&nbsp;</h1>
+      <h1 id="timer">&nbsp;</h1>
+    </div>
+    <canvas></canvas>
+  </div>
+  <div class="rightArea">
+    <div class="gameInfo">
+      <h1 style="width:100%">SCOREBOARD</h1>
+    </div>
+    <div class="scoreboard"></div>
+  </div>
+
+  <!--     <div class="tag">Made by: Oskar K, 4.RA </div>    -->
+  <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+</body>
+
+</html>
+>>>>>>> Stashed changes
