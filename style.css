@@ -8,51 +8,6 @@
 }
 
 body {
-<<<<<<< Updated upstream
-  height: 98vh;
-  font-family: "Roboto", sans-serif;
-  color: #f2eceb;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  background-color: #1c0d24;
-  background-image: url("images/bg.jpg");
-}
-
-canvas {
-  background-color: #f2eceb;
-}
-.Top {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  grid-area: Top;
-}
-
-.Top > h1 {
-  background-color: #af4ae1;
-  flex: 1;
-  text-align: center;
-  padding: 1rem;
-}
-
-.Right {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  grid-area: Right;
-}
-
-.Right > h1 {
-  background-color: #af4ae1;
-  flex: 1;
-  text-align: center;
-  padding: 1rem 0.5rem;
-  margin-bottom: 3rem;
-=======
 	height: 100vh;
 	width: 100%;
 	font-family: "Roboto", sans-serif;
@@ -104,13 +59,12 @@ canvas {
 	margin-bottom: 1rem;
 }
 .gameInfo > h1 {
-	width: 100%;
-	padding-top: 0.5rem;
-	padding-bottom: 0.5rem;
+	width: 25%;
+/* 	padding-top: 0.5rem;
+	padding-bottom: 0.5rem; */
 	display: flex;
 	align-items: center;
-	justify-content: space-evenly;
->>>>>>> Stashed changes
+	justify-content: center;
 }
 .overlay {
 	position: fixed;
@@ -135,26 +89,6 @@ canvas {
 }
 
 .popup {
-<<<<<<< Updated upstream
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  transition: 200ms ease-in-out;
-  z-index: 10;
-  background-color: #f2eceb;
-  height: 50vh;
-  width: 50vw;
-}
-
-.popup-header {
-  background-color: #af4ae1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  border-bottom: 0.25rem #401d52 solid;
-=======
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -165,6 +99,144 @@ canvas {
 	background-color: #f2eceb;
 }
 
+.topLeft {
+	grid-area: topLeft;
+}
+
+.topRight {
+	grid-area: topRight;
+}
+
+.bottomLeft {
+	grid-area: bottomLeft;
+}
+
+.bottomRight {
+	grid-area: bottomRight;
+}
+.popup-header {
+	background-color: #49bf88;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem;
+	border-radius: 5px 5px 0 0;
+}
+
+.popup-header > input[type="button"] {
+	font-weight: bold;
+	color: #f2eceb;
+	cursor: pointer;
+	background: none;
+	border: none;
+	outline: none;
+}
+
+.popup > main {
+	color: #49bf88;
+	padding: 0.5rem;
+	text-align: center;
+}
+
+.popup > main > p {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+#playButton {
+	font-family: "Roboto", sans-serif;
+
+	background-color: #49bf88;
+	border: none;
+	color: #f2eceb;
+	padding: 0.5rem;
+	border-radius: 5px;
+}
+
+#playButton:active {
+	background-color: #1d4c36;
+	color: #f2eceb;
+}
+
+#playerName {
+	font-family: "Roboto", sans-serif;
+	border-radius: 5px;
+	color: #f2eceb;
+	border: none;
+	outline: none;
+	background-color: #49bf8888;
+	padding: 0.5rem;
+}
+
+/* Endscreen */
+
+.endscreen {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);
+	transition: 200ms ease-in-out;
+	z-index: 11;
+
+	background-color: #f2eceb;
+	border-radius: 5px;
+}
+
+.endscreen > input[type="button"]:active {
+	background-color: #1d4c36;
+	color: #f2eceb;
+}
+
+.endscreen > input[type="button"] {
+	font-family: "Roboto", sans-serif;
+	border: none;
+	background-color: #49bf88;
+	color: #f2eceb;
+	padding: 0.5rem;
+	border-radius: 5px;
+	margin: 1rem;
+}
+
+.endscreen > h1 {
+	padding: 0.5rem;
+}
+
+#playButton {
+	font-family: "Roboto", sans-serif;
+	font-size: 24px;
+	background-color: #49bf88;
+	border: none;
+	color: #f2eceb;
+	padding: 0.5rem;
+}
+
+#playButton:active {
+	background-color: #f2eceb;
+	color: #49bf88;
+}
+
+#playerName {
+	font-family: "Roboto", sans-serif;
+	font-size: 24px;
+	color: #f2eceb;
+	border: none;
+	background-color: #49bf88;
+	padding: 0.5rem;
+}
+
+#highScores {
+	position: fixed;
+	top: 1vh;
+	right: 1vw;
+	z-index: 10;
+	background-color: #f2eceb;
+	height: 100vh;
+}
 .popupGrid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -201,228 +273,38 @@ canvas {
 .bottomRight {
 	grid-area: bottomRight;
 }
-.popup-header {
-	background-color: #49bf88;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0.5rem;
-	border-radius: 5px 5px 0 0;
->>>>>>> Stashed changes
-}
-
-.popup-header > input[type="button"] {
-	font-weight: bold;
-	color: #f2eceb;
-	cursor: pointer;
-	background: none;
-	border: none;
-	outline: none;
-}
-
-
-.popup > main {
-<<<<<<< Updated upstream
-  color: #af4ae1;
-  padding: 0.5rem;
-  text-align: center;
-=======
-	color: #49bf88;
-	padding: 0.5rem;
-	text-align: center;
->>>>>>> Stashed changes
-}
-
-.popup > main > p {
-	margin-top: 0.5rem;
-	margin-bottom: 0.5rem;
-}
-
-<<<<<<< Updated upstream
-h3 {
-  padding-bottom: 0.5rem;
-  border-bottom: 0.125rem #401d52 solid;
-}
-
-=======
-#playButton {
-	font-family: "Roboto", sans-serif;
-
-	background-color: #49bf88;
-	border: none;
-	color: #f2eceb;
-	padding: 0.5rem;
-	border-radius: 5px;
-}
-
-#playButton:active {
-	background-color: #1d4c36;
-	color: #f2eceb;
-}
-
-#playerName {
-	font-family: "Roboto", sans-serif;
-	border-radius: 5px;
-	color: #f2eceb;
-	border: none;
-	outline: none;
-	background-color: #49bf8888;
-	padding: 0.5rem;
-}
-
-/* Endscreen */
-
->>>>>>> Stashed changes
-.endscreen {
-	position: fixed;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	text-align: center;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%) scale(0);
-	transition: 200ms ease-in-out;
-	z-index: 11;
-
-	background-color: #f2eceb;
-	border-radius: 5px;
-}
-
-<<<<<<< Updated upstream
-.endscreen > input[type="button"] {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  background-color: #af4ae1;
-  border: none;
-  color: #f2eceb;
-  padding: 0.5rem;
-}
-
-.endscreen > input[type="button"]:active {
-  background-color: #f2eceb;
-  color: #af4ae1;
-=======
-.endscreen > input[type="button"]:active {
-	background-color: #1d4c36;
-	color: #f2eceb;
-}
-
-.endscreen > input[type="button"] {
-	font-family: "Roboto", sans-serif;
-	border: none;
-	background-color: #49bf88;
-	color: #f2eceb;
-	padding: 0.5rem;
-	border-radius: 5px;
-	margin: 1rem;
->>>>>>> Stashed changes
-}
-
-.endscreen > h1 {
-	padding: 0.5rem;
-}
-
-#playButton {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  background-color: #af4ae1;
-  border: none;
-  color: #f2eceb;
-  padding: 0.5rem;
-}
-
-#playButton:active {
-  background-color: #f2eceb;
-  color: #af4ae1;
-}
-
-#playerName {
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  color: #f2eceb;
-  border: none;
-  background-color: #af4ae188;
-  padding: 0.5rem;
-}
-
-#highScores {
-	position: fixed;
-	top: 1vh;
-	right: 1vw;
-	z-index: 10;
-	background-color: #f2eceb;
-	height: 100vh;
-}
-.popupGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    "topLeft topRight"
-    "bottomLeft bottomRight";
-}
-.popupGrid > div {
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.popupGrid > div > img {
-  height: 6rem;
-  box-shadow:4px 4px 4px #1c0d24;
-}
-
-.topLeft {
-  grid-area: topLeft;
-}
-
-.topRight {
-  grid-area: topRight;
-}
-
-.bottomLeft {
-  grid-area: bottomLeft;
-}
-
-.bottomRight {
-  grid-area: bottomRight;
-}
 
 .grid-container {
-  margin-top: 4vh;
-  height: 94vh;
-  width: 99vw;
-  display: grid;
-  grid-template-columns: 0.75fr 1.25fr 1.25fr 0.75fr;
-  grid-template-rows: 0.3fr 1.7fr 1fr;
-  gap: 3rem 3rem;
-  grid-template-areas:
-    "left Top Top Right"
-    "left CanvasArea CanvasArea Right"
-    "left CanvasArea CanvasArea Right";
+	margin-top: 4vh;
+	height: 94vh;
+	width: 99vw;
+	display: grid;
+	grid-template-columns: 0.75fr 1.25fr 1.25fr 0.75fr;
+	grid-template-rows: 0.3fr 1.7fr 1fr;
+	gap: 3rem 3rem;
+	grid-template-areas:
+		"left Top Top Right"
+		"left CanvasArea CanvasArea Right"
+		"left CanvasArea CanvasArea Right";
 }
 
 .left {
-  grid-area: left;
+	grid-area: left;
 }
 
 .scoreboard {
-  color: #f2eceb;
-  text-align: center;
-  padding: 0.5rem;
-  height: 100%;
-  width: 100%;
+	color: #f2eceb;
+	text-align: center;
+	padding: 0.5rem;
+	height: 100%;
+	width: 100%;
 }
 
 .CanvasArea {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  grid-area: CanvasArea;
+	display: flex;
+	align-items: start;
+	justify-content: center;
+	grid-area: CanvasArea;
 }
 
 /* The switch - the box around the slider */

@@ -1,12 +1,7 @@
 canvas = document.querySelector("canvas");
-<<<<<<< Updated upstream
-canvas.width = document.querySelector(".CanvasArea").clientWidth;
-canvas.height = document.querySelector(".CanvasArea").clientHeight / 1.5;
-=======
 window.onload = reportWindowSize;
 window.onresize = reportWindowSize;
 
->>>>>>> Stashed changes
 ctx = canvas.getContext("2d");
 document.addEventListener("keyup", onKeyUp);
 document.addEventListener("keydown", onKeyDown);
@@ -34,7 +29,7 @@ function lockChangeAlert() {
 }
 
 var playerName;
-var lives = 3;
+var lives = 100;
 var isPaused;
 var lifeCounter;
 var scoreCounter;
@@ -45,10 +40,9 @@ var timeInterval;
 
 var hit = new Audio("sounds/hit.wav");
 var destroy = new Audio("sounds/destroy.wav");
-var lose = new Audio("sounds/lose.wav");
 var win = new Audio("sounds/win.wav");
 var life = new Audio("sounds/life.wav");
-var audioArr = [hit, destroy, lose, win, life];
+var audioArr = [hit, destroy, win, life];
 
 var savedScores = JSON.parse(window.localStorage.getItem("savedScores")) || [];
 
@@ -61,18 +55,10 @@ function init() {
 		lifeCounter = lives;
 		scoreCounter = 0;
 		startMS = Date.now();
-<<<<<<< Updated upstream
-		container = new BrickContainer(5, 3, canvas.height / 3, canvas.height / 100);
-		paddle = new Paddle(canvas.width / 5, (container.cellHeight / 2) * 0.5, canvas.height / 40);
-		ball = new Ball((container.cellHeight / 2) * 0.75, canvas.height / 100);
-
-		container.populateContainer(0);
-=======
 		container = new BrickContainer(6, 6, canvas.height / 3, canvas.height / 40);
 		paddle = new Paddle(canvas.width / 5, canvas.height / 40, canvas.height / 40);
 		ball = new Ball(container.cellHeight, canvas.height / 100);
 		container.populateContainer(3);
->>>>>>> Stashed changes
 		isInitialized = true;
 		document.querySelector(".startOverlay").style.display = "none";
 		document.querySelector("#lives").innerHTML = "LIVES : " + lifeCounter;
@@ -82,7 +68,7 @@ function init() {
 }
 
 function updateTimer() {
-	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + "e2") + "e-2");
+	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + "e2") + "e-2") + " s";
 }
 
 function gameCounter() {
@@ -104,7 +90,7 @@ function gameCounter() {
 		showEndScreen(true);
 	} else if (lifeCounter <= 0) {
 		isInitialized = false;
-		lose.play();
+
 		updateScoreboard();
 		window.cancelAnimationFrame(timer);
 		showEndScreen(false);
@@ -152,21 +138,6 @@ class BrickContainer {
 				if (container.brickArray[i][j].enabled) {
 					switch (container.brickArray[i][j].level) {
 						case 1:
-<<<<<<< Updated upstream
-							ctx.fillStyle = "#AF4AE1";
-							break;
-						case 2:
-							ctx.fillStyle = "#9406DB";
-							break;
-						case 3:
-							ctx.fillStyle = "#7205A8";
-							break;
-						case 4:
-							ctx.fillStyle = "#3E035C";
-							break;
-						case 5:
-							ctx.fillStyle = "#2C1338";
-=======
 							ctx.fillStyle = "#BF4736";
 							break;
 						case 2:
@@ -174,7 +145,6 @@ class BrickContainer {
 							break;
 						case 3:
 							ctx.fillStyle = "#391510";
->>>>>>> Stashed changes
 							break;
 						default:
 							ctx.fillStyle = "#FFFFFF";
@@ -218,25 +188,11 @@ class Brick {
 		this.enabled = true;
 	}
 	checkCollision() {
-<<<<<<< Updated upstream
-		if (this.enabled && !(ball.hasCollided)) {
-			if (
-				ball.y - ball.dia < this.y + container.cellHeight &&
-				ball.y + ball.dia > this.y
-			) {
-				if (
-					ball.x + ball.dia > this.x &&
-					ball.x - ball.dia < this.x + container.cellWidth
-				) {
-					ball.hasCollided=true;
-					setTimeout(ball.hasCollided=false, 150)
-=======
 		if (this.enabled && !ball.hasCollided) {
 			if (ball.y - ball.dia < this.y + container.cellHeight && ball.y + ball.dia > this.y) {
 				if (ball.x + ball.dia > this.x && ball.x - ball.dia < this.x + container.cellWidth) {
 					ball.hasCollided = true;
 					setTimeout((ball.hasCollided = false), 150);
->>>>>>> Stashed changes
 					let centerX = this.x + container.cellWidth / 2;
 					let centerY = this.y + container.cellHeight / 2;
 					let offsetX = Math.abs(ball.x - centerX);
@@ -295,7 +251,7 @@ class Ball {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.dia, 0, Math.PI * 2, true);
 		ctx.closePath();
-		ctx.fillStyle = "#2FA125";
+		ctx.fillStyle = "#49bf88";
 		ctx.fill();
 		/* 		ctx.beginPath();
 				ctx.lineWidth = 5;
@@ -329,7 +285,7 @@ class Paddle {
 		this.xUpdate = 0;
 	}
 	drawPaddle() {
-		ctx.fillStyle = "#4D174F";
+		ctx.fillStyle = "#49bf88";
 		if (this.rightDown && this.x <= canvas.width - this.width) {
 			this.x += this.step;
 		}
@@ -371,7 +327,7 @@ function onKeyDown(evt) {
 		paddle.leftDown = true;
 		paddle.xUpdate = paddle.step * -1;
 	}
-	if (evt.keyCode == 32) {
+	if (evt.keyCode == 32 && document.querySelector(".overlay").style.display == "none") {
 		init();
 		hideEndScreen();
 	}
@@ -469,8 +425,4 @@ function updateScoreboardElement() {
 			break;
 		}
 	}
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
