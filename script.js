@@ -29,7 +29,7 @@ function lockChangeAlert() {
 }
 
 var playerName;
-var lives = 100;
+var lives = 3;
 var isPaused;
 var lifeCounter;
 var scoreCounter;
@@ -37,6 +37,7 @@ var isInitialized = false;
 var startMS;
 var timer;
 var timeInterval;
+var scoreTimer;
 
 var hit = new Audio("sounds/hit.wav");
 var destroy = new Audio("sounds/destroy.wav");
@@ -54,10 +55,11 @@ function init() {
 		playerName = document.querySelector("#playerName").value;
 		lifeCounter = lives;
 		scoreCounter = 0;
+		scoreTimer = Date.now();
 		startMS = Date.now();
 		container = new BrickContainer(6, 6, canvas.height / 3, canvas.height / 40);
 		paddle = new Paddle(canvas.width / 5, canvas.height / 40, canvas.height / 40);
-		ball = new Ball(container.cellHeight, canvas.height / 100);
+		ball = new Ball(container.cellHeight / 2, canvas.height / 100);
 		container.populateContainer(3);
 		isInitialized = true;
 		document.querySelector(".startOverlay").style.display = "none";
@@ -68,11 +70,15 @@ function init() {
 }
 
 function updateTimer() {
-	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + "e2") + "e-2") + " s";
+	document.querySelector("#timer").innerHTML = "TIME: " + Number(Math.round((Date.now() - startMS) / 1000 + "e1") + "e-1") + " s";
+	if (Date.now() - scoreTimer >= 1300) {
+		console.log(Date.now() - scoreTimer);
+		scoreTimer = Date.now();
+		scoreCounter -= 10;
+	}
 }
 
 function gameCounter() {
-	scoreCounter -= 1;
 	document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 	toggleMusic();
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -222,13 +228,13 @@ class Brick {
 					}
 
 					this.level -= 1;
-					scoreCounter += 200;
+					scoreCounter += 20;
 					document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 					hit.play();
 				}
 			}
 			if (this.level <= 0) {
-				scoreCounter += 400;
+				scoreCounter += 40;
 				document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
 				destroy.play();
 				this.enabled = false;
@@ -353,7 +359,7 @@ function onMouseMove(evt) {
 function checkForFails() {
 	if (ball.y + ball.dia >= canvas.height) {
 		lifeCounter--;
-		scoreCounter -= 200;
+		scoreCounter -= 20;
 		life.play();
 		document.querySelector("#lives").innerHTML = "LIVES : " + lifeCounter;
 		document.querySelector("#score").innerHTML = "SCORE : " + scoreCounter;
@@ -397,9 +403,9 @@ function toggleMusic() {
 function updateScoreboard() {
 	let tempScore;
 	let isLast = true;
-
-	/* scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100) + lifeCounter * 100; */
+	if (playerName.length > 10) playerName = playerName.substring(0, 10);
 	if (playerName.trim() != "") {
+		/* scoreCounter = scoreCounter - Math.round((Date.now() - startMS) / 100) + lifeCounter * 100; */
 		for (let i = 0; i < savedScores.length; i++) {
 			tempScore = savedScores[i].split("&nbsp;");
 			if (scoreCounter >= tempScore[1]) {

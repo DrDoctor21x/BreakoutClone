@@ -50,22 +50,31 @@ body {
 canvas {
 	background-color: #f2eceb4e;
 }
+p {
+	color: #292929;
+}
 .gameInfo {
 	background-color: #292929;
 	width: 100%;
 	display: flex;
 	align-items: center;
-	justify-content: space-evenly;
+	justify-content: space-around;
 	margin-bottom: 1rem;
+	border-bottom: 0.2rem solid #49bf88;
 }
 .gameInfo > h1 {
-	width: 25%;
-/* 	padding-top: 0.5rem;
-	padding-bottom: 0.5rem; */
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	width: 30%;
+	text-align: center;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
 }
+#tag {
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
 .overlay {
 	position: fixed;
 	z-index: 1;
